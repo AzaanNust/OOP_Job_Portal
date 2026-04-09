@@ -1,4 +1,4 @@
-package OOP.JobPortal.ResumeMatchingSystem.entity;
+package OOP.JobPortal.ResumeMatchingSystem.Entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
