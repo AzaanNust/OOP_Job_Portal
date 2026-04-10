@@ -1,0 +1,126 @@
+# ================================================================
+# docker-compose.yml  –  Job Portal Full Stack Docker Setup
+# ================================================================
+# This file defines three services that run together:
+#   1. db        → MySQL 8 database
+#   2. app       → Spring Boot backend
+#   3. phpmyadmin→ Web UI to view/manage the database (optional)
+#
+# HOW TO USE:
+#   Start everything:    docker-compose up --build
+#   Stop everything:     docker-compose down
+#   View logs:           docker-compose logs -f app
+#   Reset database:      docker-compose down -v   (deletes all data)
+#
+# PORTS after startup:
+#   Spring Boot API:   http://localhost:8080
+#   Swagger UI:        http://localhost:8080/swagger-ui.html
+#   phpMyAdmin:        http://localhost:8081
+# ================================================================
+
+version: '3.9'
+
+services:
+
+  # ── MySQL Database ─────────────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: job_portal_db
+
+    # Restart automatically if the container crashes
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123      # Root password inside Docker
+      MYSQL_DATABASE: job_portal_db             # Database created automatically
+      MYSQL_USER: jobportal_user                # App-specific user
+      MYSQL_PASSWORD: jobportal_pass123         # App-specific password
+
+    ports:
+      # host:container — lets you connect with MySQL Workbench at localhost:3307
+      # (3307 on host to avoid conflict if you already have MySQL running locally)
+      - "3307:3306"
+
+    volumes:
+      # Named volume: persists database data across container restarts
+      # Without this, ALL data is lost every time you run 'docker-compose down'
+      - mysql_data:/var/lib/mysql
+
+    # Health check: Spring Boot waits for MySQL to be ready before starting
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    networks:
+      - jobportal_network
+
+  # ── Spring Boot Application ────────────────────────────────────
+  app:
+    build:
+      context: ./backend         # Build from the backend/ directory's Dockerfile
+      dockerfile: Dockerfile
+
+    container_name: job_portal_app
+    restart: unless-stopped
+
+    # Wait for MySQL to be healthy before starting Spring Boot
+    depends_on:
+      db:
+        condition: service_healthy
+
+    environment:
+      # Override application.yml values with Docker-specific settings
+      # 'db' is the service name above — Docker DNS resolves it automatically
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/job_portal_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: jobportal_user
+      SPRING_DATASOURCE_PASSWORD: jobportal_pass123
+
+      # IMPORTANT: Replace these with your real values before deploying
+      JWT_SECRET: JobPortalSuperSecretKeyThatIsAtLeast256BitsLongForHS256Algorithm2024
+      CLAUDE_API_KEY: your_claude_api_key_here
+      MAIL_USERNAME: your_email@gmail.com
+      MAIL_PASSWORD: your_gmail_app_password
+
+      # Spring profile (can be 'dev', 'prod', etc.)
+      SPRING_PROFILES_ACTIVE: docker
+
+    ports:
+      - "8080:8080"             # Spring Boot API accessible at localhost:8080
+
+    networks:
+      - jobportal_network
+
+  # ── phpMyAdmin (Database Browser) ─────────────────────────────
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: job_portal_phpmyadmin
+    restart: unless-stopped
+
+    depends_on:
+      - db
+
+    environment:
+      PMA_HOST: db               # Connect to the 'db' service
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: rootpassword123
+
+    ports:
+      - "8081:80"                # phpMyAdmin at http://localhost:8081
+
+    networks:
+      - jobportal_network
+
+# ── Shared Network ─────────────────────────────────────────────
+# All containers can talk to each other using service names as hostnames
+networks:
+  jobportal_network:
+    driver: bridge
+
+# ── Named Volumes ──────────────────────────────────────────────
+# Data persists here even when containers are stopped
+volumes:
+  mysql_data:
+    driver: local
