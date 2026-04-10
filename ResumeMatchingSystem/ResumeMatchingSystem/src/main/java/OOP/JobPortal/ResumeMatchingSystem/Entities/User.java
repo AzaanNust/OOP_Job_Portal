@@ -43,7 +43,6 @@ import java.util.List;
  * ============================================================
  */
 @MappedSuperclass                    // JPA: share columns with subclass tables
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User implements UserDetails {
 
     // ================================================================

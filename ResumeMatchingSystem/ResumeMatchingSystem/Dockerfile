@@ -53,7 +53,7 @@ USER jobportal
 
 # Expose the port the app runs on
 EXPOSE 8080
-f
+
 # JVM flags:
 #   -XX:+UseContainerSupport  → JVM respects Docker memory limits
 #   -XX:MaxRAMPercentage=75.0 → Use at most 75% of container RAM

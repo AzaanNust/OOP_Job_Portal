@@ -39,7 +39,7 @@ services:
     ports:
       # host:container — lets you connect with MySQL Workbench at localhost:3307
       # (3307 on host to avoid conflict if you already have MySQL running locally)
-      - "3307:3306"
+      - "3306:3306"
 
     volumes:
       # Named volume: persists database data across container restarts
@@ -60,7 +60,7 @@ services:
   # ── Spring Boot Application ────────────────────────────────────
   app:
     build:
-      context: ./backend         # Build from the backend/ directory's Dockerfile
+      context: .         # Build from the backend/ directory's Dockerfile
       dockerfile: Dockerfile
 
     container_name: job_portal_app
