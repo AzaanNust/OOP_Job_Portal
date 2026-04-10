@@ -1,0 +1,15 @@
+# Files and directories to exclude from the Docker build context
+# This speeds up 'docker build' by not sending unnecessary files to Docker daemon
+
+.git
+.gradle
+build
+out
+*.class
+*.jar
+*.war
+*.log
+.idea
+*.iml
+.DS_Store
+README.md
