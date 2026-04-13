@@ -1,6 +1,6 @@
-package OOP.JobPortal.ResumeMatchingSystem.repository;
+package OOP.JobPortal.ResumeMatchingSystem.Repositories;
 
-import OOP.JobPortal.ResumeMatchingSystem.entity.JobSeeker;
+import OOP.JobPortal.ResumeMatchingSystem.Entities.JobSeeker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
