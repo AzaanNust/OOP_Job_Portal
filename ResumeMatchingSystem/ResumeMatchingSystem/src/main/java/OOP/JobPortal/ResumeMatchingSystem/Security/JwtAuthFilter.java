@@ -1,4 +1,4 @@
 package OOP.JobPortal.ResumeMatchingSystem.Security;
 
-public class CustomerUserDetailsService {
+public class JwtAuthFilter {
 }
