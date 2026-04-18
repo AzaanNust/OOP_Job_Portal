@@ -1,6 +1,6 @@
 package OOP.JobPortal.ResumeMatchingSystem.Services;
 
-import OOP.JobPortal.ResumeMatchingSystem.entity.Resume;
+import OOP.JobPortal.ResumeMatchingSystem.Entities.Resume;
 
 public abstract class AbstractPdfService {
 

@@ -1,7 +1,7 @@
 package OOP.JobPortal.ResumeMatchingSystem.Services;
 
-import OOP.JobPortal.ResumeMatchingSystem.entity.Notification;
-import OOP.JobPortal.ResumeMatchingSystem.enums.AppStage;
+import OOP.JobPortal.ResumeMatchingSystem.Entities.Notification;
+import OOP.JobPortal.ResumeMatchingSystem.Enums.AppStage;
 
 import java.util.List;
 

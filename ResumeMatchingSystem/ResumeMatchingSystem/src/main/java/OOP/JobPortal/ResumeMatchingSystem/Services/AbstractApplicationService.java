@@ -1,7 +1,7 @@
 package OOP.JobPortal.ResumeMatchingSystem.Services;
 
-import OOP.JobPortal.ResumeMatchingSystem.dto.request.ApplicationRequest;
-import OOP.JobPortal.ResumeMatchingSystem.dto.response.ApplicationResponse;
+import OOP.JobPortal.ResumeMatchingSystem.DTOs.request.ApplicationRequest;
+import OOP.JobPortal.ResumeMatchingSystem.DTOs.response.ApplicationResponse;
 
 import java.util.List;
 

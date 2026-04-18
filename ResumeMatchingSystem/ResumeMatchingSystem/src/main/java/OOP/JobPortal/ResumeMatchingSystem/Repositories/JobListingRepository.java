@@ -39,7 +39,7 @@ public interface JobListingRepository extends JpaRepository<JobListing, Long> {
      * @return         paginated list of matching open jobs
      */
     @Query("SELECT j FROM JobListing j WHERE " +
-            "j.status = OOP.JobPortal.ResumeMatchingSystem.enums.JobStatus.OPEN AND " +
+            "j.status = OOP.JobPortal.ResumeMatchingSystem.Enums.JobStatus.OPEN AND " + // Fixed 'Enums'
             "(:title    IS NULL OR LOWER(j.title)    LIKE LOWER(CONCAT('%', :title, '%'))) AND " +
             "(:location IS NULL OR LOWER(j.location) LIKE LOWER(CONCAT('%', :location, '%'))) AND " +
             "(:shift    IS NULL OR j.shiftType = :shift)")
