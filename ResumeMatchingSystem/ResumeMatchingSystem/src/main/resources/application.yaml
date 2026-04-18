@@ -18,8 +18,8 @@ spring:
   # The SPRING_DATASOURCE_URL environment variable overrides this if set (Docker sets it)
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/job_portal_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
-    username: ${SPRING_DATASOURCE_USERNAME:jobportal_user}
-    password: ${SPRING_DATASOURCE_PASSWORD:jobportal_pass123}
+    username: root
+    password: admin@123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   # ── JPA / Hibernate ────────────────────────────────────────────
