@@ -1,7 +1,7 @@
 package OOP.JobPortal.ResumeMatchingSystem.Services;
 
-import OOP.JobPortal.ResumeMatchingSystem.entity.JobSeeker;
-import OOP.JobPortal.ResumeMatchingSystem.entity.Resume;
+import OOP.JobPortal.ResumeMatchingSystem.Entities.JobSeeker;
+import OOP.JobPortal.ResumeMatchingSystem.Entities.Resume;
 
 public abstract class AbstractAiService {
 
