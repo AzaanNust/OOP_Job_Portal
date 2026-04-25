@@ -1,8 +1,8 @@
 package OOP.JobPortal.ResumeMatchingSystem.Services;
 
-import OOP.JobPortal.ResumeMatchingSystem.dto.request.JobListingRequest;
-import OOP.JobPortal.ResumeMatchingSystem.dto.response.JobListingResponse;
-import OOP.JobPortal.ResumeMatchingSystem.enums.ShiftType;
+import OOP.JobPortal.ResumeMatchingSystem.DTOs.request.JobListingRequest;
+import OOP.JobPortal.ResumeMatchingSystem.DTOs.response.JobListingResponse;
+import OOP.JobPortal.ResumeMatchingSystem.Enums.ShiftType;
 import org.springframework.data.domain.Page;
 
 public abstract class AbstractJobService {
