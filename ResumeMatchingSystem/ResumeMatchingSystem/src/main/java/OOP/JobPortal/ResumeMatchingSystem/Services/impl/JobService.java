@@ -33,7 +33,6 @@ public class JobService extends AbstractJobService {
 
     @Transactional
     public JobListingResponse postJob(Long employerId, JobListingRequest request) {
-
         Employer employer = employerRepo.findById(employerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employer", employerId));
 
@@ -59,45 +58,30 @@ public class JobService extends AbstractJobService {
             try {
                 job.setDeadline(LocalDateTime.parse(request.getDeadline()));
             } catch (Exception e) {
-                throw new BusinessException(
-                        "Invalid deadline format. Please use: 2024-12-31T23:59:59");
+                throw new BusinessException("Invalid deadline format. Use: 2024-12-31T23:59:59");
             }
         }
-
-        job = jobRepo.save(job);
-        return JobListingResponse.from(job);
+        return JobListingResponse.from(jobRepo.save(job));
     }
 
     public Page<JobListingResponse> searchJobs(String title, String location,
                                                ShiftType shift, int page, int size) {
-
-        String normalizedTitle    = (title    != null && title.isBlank())    ? null : title;
-        String normalizedLocation = (location != null && location.isBlank()) ? null : location;
-
-        PageRequest pageable = PageRequest.of(page, size,
-                Sort.by("createdAt").descending());
-
-        Page<JobListing> results = jobRepo.searchJobs(
-                normalizedTitle, normalizedLocation, shift, pageable);
-
-        return results.map(JobListingResponse::from);
+        String t = (title    != null && title.isBlank())    ? null : title;
+        String l = (location != null && location.isBlank()) ? null : location;
+        PageRequest pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return jobRepo.searchJobs(t, l, shift, pageable).map(JobListingResponse::from);
     }
 
     public JobListingResponse getJobById(Long jobId) {
-        JobListing job = jobRepo.findById(jobId)
-                .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId));
-        return JobListingResponse.from(job);
+        return JobListingResponse.from(
+                jobRepo.findById(jobId)
+                        .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId))
+        );
     }
 
     /**
-     * Returns all jobs posted by a specific employer.
-     * Called by GET /api/jobs/my-jobs (employer dashboard).
-     *
-     * Uses the repository method findByEmployerIdOrderByCreatedAtDesc()
-     * which Spring Data JPA auto-implements from the method name.
-     *
-     * @param employerId the logged-in employer's ID
-     * @return           list of their job listings, newest first
+     * Returns all jobs posted by a specific employer, newest first.
+     * Used by GET /api/jobs/my-jobs.
      */
     public List<JobListingResponse> getJobsByEmployer(Long employerId) {
         return jobRepo.findByEmployerIdOrderByCreatedAtDesc(employerId)
@@ -107,15 +91,12 @@ public class JobService extends AbstractJobService {
     }
 
     @Transactional
-    public JobListingResponse updateJob(Long jobId, Long employerId,
-                                        JobListingRequest request) {
-
+    public JobListingResponse updateJob(Long jobId, Long employerId, JobListingRequest request) {
         JobListing job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId));
 
-        if (!job.getEmployer().getId().equals(employerId)) {
+        if (!job.getEmployer().getId().equals(employerId))
             throw new BusinessException("You can only edit your own job listings.");
-        }
 
         job.setTitle(request.getTitle());
         job.setDescription(request.getDescription());
@@ -133,15 +114,28 @@ public class JobService extends AbstractJobService {
 
     @Transactional
     public JobListingResponse closeJob(Long jobId, Long employerId) {
-
         JobListing job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId));
 
-        if (!job.getEmployer().getId().equals(employerId)) {
+        if (!job.getEmployer().getId().equals(employerId))
             throw new BusinessException("You can only close your own job listings.");
-        }
 
         job.closeJob();
         return JobListingResponse.from(jobRepo.save(job));
+    }
+
+    /**
+     * Permanently deletes a job listing.
+     * Only the employer who posted it can delete it.
+     */
+    @Transactional
+    public void deleteJob(Long jobId, Long employerId) {
+        JobListing job = jobRepo.findById(jobId)
+                .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId));
+
+        if (!job.getEmployer().getId().equals(employerId))
+            throw new BusinessException("You can only delete your own job listings.");
+
+        jobRepo.delete(job);
     }
 }
