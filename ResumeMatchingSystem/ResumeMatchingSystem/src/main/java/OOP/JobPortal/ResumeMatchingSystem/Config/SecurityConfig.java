@@ -54,13 +54,31 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public endpoints — no JWT required
+                        // ── Public auth endpoints ──────────────────────────────
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        // ── Public job browsing ────────────────────────────────
                         .requestMatchers(HttpMethod.GET, "/api/jobs/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
-                        // Admin-only endpoints
+
+                        // ── Swagger UI — ALL paths it needs ───────────────────
+                        // Must include every path Swagger UI requests internally
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/api-docs",
+                                "/api-docs/**",
+                                "/api-docs.yaml",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/webjars/**",
+                                "/swagger-resources",
+                                "/swagger-resources/**"
+                        ).permitAll()
+
+                        // ── Admin-only ─────────────────────────────────────────
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        // Everything else requires authentication
+
+                        // ── Everything else requires JWT ───────────────────────
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())

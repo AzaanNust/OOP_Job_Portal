@@ -21,7 +21,10 @@ import java.util.List;
 /**
  * JobController – job listing endpoints.
  * GET endpoints are public. POST/PUT/PATCH require EMPLOYER role.
- * WEEK 3 – Menu-driven system: GET /api/jobs is the main "browse jobs" menu item.
+ *
+ * IMPORTANT: Specific routes (/my-jobs) MUST be declared before
+ * wildcard routes (/{id}), otherwise Spring will try to parse
+ * "my-jobs" as a Long and throw a NumberFormatException.
  */
 @RestController
 @RequestMapping("/api/jobs")
@@ -31,7 +34,7 @@ public class JobController {
     @Autowired
     private JobService jobService;
 
-    /** GET /api/jobs?title=Java&location=Lahore&shift=NIGHT&page=0&size=10 */
+    /** GET /api/jobs?title=Java&location=Lahore&shift=MORNING&page=0&size=10 */
     @GetMapping
     @Operation(summary = "Search jobs by title, location, and shift type")
     public ResponseEntity<Page<JobListingResponse>> searchJobs(
@@ -43,7 +46,21 @@ public class JobController {
         return ResponseEntity.ok(jobService.searchJobs(title, location, shift, page, size));
     }
 
-    /** GET /api/jobs/{id} */
+    /**
+     * GET /api/jobs/my-jobs – returns all jobs posted by the logged-in employer.
+     *
+     * CRITICAL: This MUST be declared BEFORE /{id} — Spring matches routes top-to-bottom.
+     * If /{id} comes first, Spring tries to parse "my-jobs" as a Long and crashes.
+     */
+    @GetMapping("/my-jobs")
+    @PreAuthorize("hasRole('EMPLOYER')")
+    @Operation(summary = "Get all jobs posted by the logged-in employer")
+    public ResponseEntity<List<JobListingResponse>> getMyJobs(
+            @AuthenticationPrincipal Employer employer) {
+        return ResponseEntity.ok(jobService.getJobsByEmployer(employer.getId()));
+    }
+
+    /** GET /api/jobs/{id} — MUST come AFTER /my-jobs */
     @GetMapping("/{id}")
     @Operation(summary = "Get job details by ID")
     public ResponseEntity<JobListingResponse> getById(@PathVariable Long id) {
@@ -60,15 +77,6 @@ public class JobController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(jobService.postJob(employer.getId(), request));
     }
-
-//    /** GET /api/jobs/my-jobs – employer views their own jobs */
-//    @GetMapping("/my-jobs")
-//    @PreAuthorize("hasRole('EMPLOYER')")
-//    @Operation(summary = "Get all jobs posted by the logged-in employer")
-//    public ResponseEntity<List<JobListingResponse>> getMyJobs(
-//            @AuthenticationPrincipal Employer employer) {
-//        return ResponseEntity.ok(jobService.getJobsByEmployer(employer.getId()));
-//    }
 
     /** PUT /api/jobs/{id} */
     @PutMapping("/{id}")

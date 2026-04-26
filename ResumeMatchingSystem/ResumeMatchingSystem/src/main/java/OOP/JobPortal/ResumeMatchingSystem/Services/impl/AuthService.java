@@ -11,7 +11,7 @@ import OOP.JobPortal.ResumeMatchingSystem.Exceptions.BusinessException;
 import OOP.JobPortal.ResumeMatchingSystem.Repositories.AdminRepository;
 import OOP.JobPortal.ResumeMatchingSystem.Repositories.EmployerRepository;
 import OOP.JobPortal.ResumeMatchingSystem.Repositories.JobSeekerRepository;
-import OOP.JobPortal.ResumeMatchingSystem.security.JwtUtil;
+import OOP.JobPortal.ResumeMatchingSystem.Security.JwtUtil;
 import OOP.JobPortal.ResumeMatchingSystem.Services.AbstractAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -90,7 +90,7 @@ public class AuthService extends AbstractAuthService {
      */
     @Transactional
     public AuthResponse registerJobSeeker(RegisterJobSeekerRequest req) {
-
+    System.out.println("Request reached service");
         // WEEK 12 – Exception Handling: check business rule before proceeding
         if (emailAlreadyExists(req.getEmail())) {
             throw new BusinessException(

@@ -1,4 +1,4 @@
-package OOP.JobPortal.ResumeMatchingSystem.security;
+package OOP.JobPortal.ResumeMatchingSystem.Security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

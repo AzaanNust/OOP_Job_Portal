@@ -31,7 +31,7 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Autowired
-    private OOP.JobPortal.ResumeMatchingSystem.security.JwtUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
