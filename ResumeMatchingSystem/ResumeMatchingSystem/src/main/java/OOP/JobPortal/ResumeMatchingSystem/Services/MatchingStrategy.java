@@ -40,7 +40,7 @@ import java.util.List;
  *   without changing ApplicationService at all.
  * ============================================================
  */
-public abstract class MatchingStrategy {
+public interface MatchingStrategy {
 
     /**
      * Calculates how well a resume matches a job listing.
@@ -54,7 +54,7 @@ public abstract class MatchingStrategy {
      * @param jobListing  the job posting with required and preferred skills
      * @return            compatibility score from 0.0 to 100.0
      */
-    abstract public double calculateScore(Resume resume, JobListing jobListing);
+    double calculateScore(Resume resume, JobListing jobListing);
 
     /**
      * Returns a list of skills the candidate should learn to be
@@ -69,5 +69,5 @@ public abstract class MatchingStrategy {
      * @param jobListing  the job posting
      * @return            list of skill names to improve (may be empty)
      */
-    abstract public List<String> getSkillsToImprove(Resume resume, JobListing jobListing);
+    List<String> getSkillsToImprove(Resume resume, JobListing jobListing);
 }

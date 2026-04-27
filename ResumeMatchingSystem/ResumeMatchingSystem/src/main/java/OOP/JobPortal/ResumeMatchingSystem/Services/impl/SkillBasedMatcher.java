@@ -1,6 +1,5 @@
 package OOP.JobPortal.ResumeMatchingSystem.Services.impl;
 
-
 import OOP.JobPortal.ResumeMatchingSystem.Entities.JobListing;
 import OOP.JobPortal.ResumeMatchingSystem.Entities.Resume;
 import OOP.JobPortal.ResumeMatchingSystem.Services.MatchingStrategy;
@@ -40,7 +39,7 @@ import java.util.List;
  * ============================================================
  */
 @Component
-public class SkillBasedMatcher extends MatchingStrategy {
+public class SkillBasedMatcher implements MatchingStrategy {
 
     /**
      * WEEK 4 – Static Class Member:
@@ -244,4 +243,3 @@ public class SkillBasedMatcher extends MatchingStrategy {
         return false;
     }
 }
-
