@@ -13,6 +13,17 @@ public abstract class AbstractNotificationService {
     public abstract void notifyApplicationReceived(String seekerEmail, String seekerName,
                                                    String jobTitle);
 
+    /**
+     * Notifies an employer that a new applicant has applied to their job.
+     *
+     * @param employerEmail the employer's email address
+     * @param companyName   the company name for personalisation
+     * @param seekerName    the name of the applicant
+     * @param jobTitle      the job title they applied to
+     */
+    public abstract void notifyNewApplication(String employerEmail, String companyName,
+                                              String seekerName, String jobTitle);
+
     public abstract List<Notification> getNotificationsForUser(String email);
 
     public abstract List<Notification> getUnreadNotifications(String email);
