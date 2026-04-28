@@ -2,8 +2,11 @@ package OOP.JobPortal.ResumeMatchingSystem.DTOs.response;
 import OOP.JobPortal.ResumeMatchingSystem.Entities.JobListing;
 import OOP.JobPortal.ResumeMatchingSystem.Enums.JobStatus;
 import OOP.JobPortal.ResumeMatchingSystem.Enums.ShiftType;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.time.LocalDateTime;
 /** Returned when viewing a job listing. Includes employer info and applicant count. */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class JobListingResponse {
     private Long id;
     private String title;
@@ -51,44 +54,44 @@ public class JobListingResponse {
         r.setTotalApplicants(job.getApplications().size());
         return r;
     }
-    public Long getId() { return id; }
+    //public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public String getTitle() { return title; }
+    //public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
-    public String getDescription() { return description; }
+    //public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-    public String getLocation() { return location; }
+    //public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
-    public ShiftType getShiftType() { return shiftType; }
+    //public ShiftType getShiftType() { return shiftType; }
     public void setShiftType(ShiftType shiftType) { this.shiftType = shiftType; }
-    public String getRequiredSkills() { return requiredSkills; }
+    //public String getRequiredSkills() { return requiredSkills; }
     public void setRequiredSkills(String requiredSkills) { this.requiredSkills = requiredSkills; }
-    public String getPreferredSkills() { return preferredSkills; }
+    //public String getPreferredSkills() { return preferredSkills; }
     public void setPreferredSkills(String preferredSkills) { this.preferredSkills = preferredSkills; }
-    public int getMinExperienceYears() { return minExperienceYears; }
+    //public int getMinExperienceYears() { return minExperienceYears; }
     public void setMinExperienceYears(int minExperienceYears) { this.minExperienceYears = minExperienceYears; }
-    public Double getMinSalary() { return minSalary; }
+    //public Double getMinSalary() { return minSalary; }
     public void setMinSalary(Double minSalary) { this.minSalary = minSalary; }
-    public Double getMaxSalary() { return maxSalary; }
+    //public Double getMaxSalary() { return maxSalary; }
     public void setMaxSalary(Double maxSalary) { this.maxSalary = maxSalary; }
-    public String getJobType() { return jobType; }
+    //public String getJobType() { return jobType; }
     public void setJobType(String jobType) { this.jobType = jobType; }
-    public int getOpenPositions() { return openPositions; }
+    //public int getOpenPositions() { return openPositions; }
     public void setOpenPositions(int openPositions) { this.openPositions = openPositions; }
-    public JobStatus getStatus() { return status; }
+    //public JobStatus getStatus() { return status; }
     public void setStatus(JobStatus status) { this.status = status; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    //public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-    public LocalDateTime getDeadline() { return deadline; }
+    //public LocalDateTime getDeadline() { return deadline; }
     public void setDeadline(LocalDateTime deadline) { this.deadline = deadline; }
-    public Long getEmployerId() { return employerId; }
+    //public Long getEmployerId() { return employerId; }
     public void setEmployerId(Long employerId) { this.employerId = employerId; }
-    public String getCompanyName() { return companyName; }
+    //public String getCompanyName() { return companyName; }
     public void setCompanyName(String companyName) { this.companyName = companyName; }
-    public String getCompanyLocation() { return companyLocation; }
+    //public String getCompanyLocation() { return companyLocation; }
     public void setCompanyLocation(String companyLocation) { this.companyLocation = companyLocation; }
-    public String getIndustry() { return industry; }
+    //public String getIndustry() { return industry; }
     public void setIndustry(String industry) { this.industry = industry; }
-    public int getTotalApplicants() { return totalApplicants; }
+    //public int getTotalApplicants() { return totalApplicants; }
     public void setTotalApplicants(int totalApplicants) { this.totalApplicants = totalApplicants; }
 }

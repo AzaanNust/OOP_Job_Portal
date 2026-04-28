@@ -1,8 +1,10 @@
 package OOP.JobPortal.ResumeMatchingSystem.DTOs.request;
 
 import OOP.JobPortal.ResumeMatchingSystem.Enums.ShiftType;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 /** Payload for updating a job seeker's profile */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UpdateSeekerRequest {
     private String fullName;
     private String phoneNumber;
@@ -14,15 +16,15 @@ public class UpdateSeekerRequest {
     public UpdateSeekerRequest() {}
 
     public String getFullName()                          { return fullName; }
-    public void   setFullName(String v)                  { this.fullName = v; }
+    //public void   setFullName(String v)                  { this.fullName = v; }
     public String getPhoneNumber()                       { return phoneNumber; }
-    public void   setPhoneNumber(String v)               { this.phoneNumber = v; }
+    //public void   setPhoneNumber(String v)               { this.phoneNumber = v; }
     public String getPreferredLocation()                 { return preferredLocation; }
-    public void   setPreferredLocation(String v)         { this.preferredLocation = v; }
+    //public void   setPreferredLocation(String v)         { this.preferredLocation = v; }
     public ShiftType getPreferredShift()                 { return preferredShift; }
-    public void   setPreferredShift(ShiftType v)         { this.preferredShift = v; }
+    //public void   setPreferredShift(ShiftType v)         { this.preferredShift = v; }
     public int    getTotalExperienceYears()              { return totalExperienceYears; }
-    public void   setTotalExperienceYears(int v)         { this.totalExperienceYears = v; }
+    //public void   setTotalExperienceYears(int v)         { this.totalExperienceYears = v; }
     public String getProfileSummary()                    { return profileSummary; }
-    public void   setProfileSummary(String v)            { this.profileSummary = v; }
+    //public void   setProfileSummary(String v)            { this.profileSummary = v; }
 }

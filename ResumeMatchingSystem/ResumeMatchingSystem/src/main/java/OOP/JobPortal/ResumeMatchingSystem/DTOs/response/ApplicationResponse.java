@@ -1,11 +1,14 @@
 package OOP.JobPortal.ResumeMatchingSystem.DTOs.response;
 import OOP.JobPortal.ResumeMatchingSystem.Entities.Application;
 import OOP.JobPortal.ResumeMatchingSystem.Enums.AppStage;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 /** Returned when viewing a job application */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ApplicationResponse {
     private Long id;
     private Long jobListingId;
@@ -45,32 +48,32 @@ public class ApplicationResponse {
         r.setSeekerEmail(app.getJobSeeker().getEmail());
         return r;
     }
-    public Long getId() { return id; }
+    //public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public Long getJobListingId() { return jobListingId; }
+    //public Long getJobListingId() { return jobListingId; }
     public void setJobListingId(Long jobListingId) { this.jobListingId = jobListingId; }
-    public String getJobTitle() { return jobTitle; }
+    //public String getJobTitle() { return jobTitle; }
     public void setJobTitle(String jobTitle) { this.jobTitle = jobTitle; }
-    public String getCompanyName() { return companyName; }
+    //public String getCompanyName() { return companyName; }
     public void setCompanyName(String companyName) { this.companyName = companyName; }
-    public String getJobLocation() { return jobLocation; }
+    //public String getJobLocation() { return jobLocation; }
     public void setJobLocation(String jobLocation) { this.jobLocation = jobLocation; }
-    public double getMatchScore() { return matchScore; }
+    //public double getMatchScore() { return matchScore; }
     public void setMatchScore(double matchScore) { this.matchScore = matchScore; }
-    public List<String> getSkillsToImprove() { return skillsToImprove; }
+    //public List<String> getSkillsToImprove() { return skillsToImprove; }
     public void setSkillsToImprove(List<String> skillsToImprove) { this.skillsToImprove = skillsToImprove; }
-    public AppStage getStage() { return stage; }
+    //public AppStage getStage() { return stage; }
     public void setStage(AppStage stage) { this.stage = stage; }
-    public String getCoverLetter() { return coverLetter; }
+    //public String getCoverLetter() { return coverLetter; }
     public void setCoverLetter(String coverLetter) { this.coverLetter = coverLetter; }
-    public String getEmployerNotes() { return employerNotes; }
+    //public String getEmployerNotes() { return employerNotes; }
     public void setEmployerNotes(String employerNotes) { this.employerNotes = employerNotes; }
-    public LocalDateTime getAppliedAt() { return appliedAt; }
+    //public LocalDateTime getAppliedAt() { return appliedAt; }
     public void setAppliedAt(LocalDateTime appliedAt) { this.appliedAt = appliedAt; }
-    public Long getSeekerId() { return seekerId; }
+    //public Long getSeekerId() { return seekerId; }
     public void setSeekerId(Long seekerId) { this.seekerId = seekerId; }
-    public String getSeekerName() { return seekerName; }
+    //public String getSeekerName() { return seekerName; }
     public void setSeekerName(String seekerName) { this.seekerName = seekerName; }
-    public String getSeekerEmail() { return seekerEmail; }
+    //public String getSeekerEmail() { return seekerEmail; }
     public void setSeekerEmail(String seekerEmail) { this.seekerEmail = seekerEmail; }
 }

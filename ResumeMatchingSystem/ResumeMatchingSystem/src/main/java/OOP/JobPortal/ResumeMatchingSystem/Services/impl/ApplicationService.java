@@ -74,12 +74,12 @@ public class ApplicationService extends AbstractApplicationService {
         notificationService.notifyApplicationReceived(
                 seeker.getEmail(), seeker.getFullName(), job.getTitle());
 
-        // Notify the employer that a new applicant has applied to their job
-        notificationService.notifyNewApplication(
-                job.getEmployer().getEmail(),
-                job.getEmployer().getCompanyName(),
-                seeker.getFullName(),
-                job.getTitle());
+//        // Notify the employer that a new applicant has applied to their job
+//        notificationService.notifyNewApplication(
+//                job.getEmployer().getEmail(),
+//                job.getEmployer().getCompanyName(),
+//                seeker.getFullName(),
+//                job.getTitle());
 
         return ApplicationResponse.from(application);
     }
@@ -87,7 +87,7 @@ public class ApplicationService extends AbstractApplicationService {
     public List<ApplicationResponse> getSeekerApplications(Long seekerId) {
         return applicationRepo.findByJobSeekerIdOrderByAppliedAtDesc(seekerId)
                 .stream()
-                .map(ApplicationResponse::from)
+                .map(ApplicationResponse::from) //equivalent to writing:.map(obj -> ApplicationResponse.from(obj))
                 .collect(Collectors.toList());
     }
 

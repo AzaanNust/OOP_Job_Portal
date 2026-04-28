@@ -1,15 +1,11 @@
 package OOP.JobPortal.ResumeMatchingSystem.Services.impl;
 
-import OOP.JobPortal.ResumeMatchingSystem.Entities.EmailNotification;
 import OOP.JobPortal.ResumeMatchingSystem.Entities.InAppNotification;
 import OOP.JobPortal.ResumeMatchingSystem.Entities.Notification;
 import OOP.JobPortal.ResumeMatchingSystem.Enums.AppStage;
 import OOP.JobPortal.ResumeMatchingSystem.Repositories.NotificationRepository;
 import OOP.JobPortal.ResumeMatchingSystem.Services.AbstractNotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +13,8 @@ import java.util.List;
 @Service
 public class NotificationService extends AbstractNotificationService {
 
-    @Autowired private NotificationRepository notificationRepo;
-    @Autowired private JavaMailSender mailSender;
+    @Autowired
+    private NotificationRepository notificationRepo;
 
     /** Notifies a seeker that their application stage has changed. */
     public void notifyApplicationStageChange(String seekerEmail, String seekerName,
@@ -28,7 +24,6 @@ public class NotificationService extends AbstractNotificationService {
         InAppNotification inApp = new InAppNotification(seekerEmail, subject, message);
         inApp.send();
         notificationRepo.save(inApp);
-        sendEmail(seekerEmail, subject, message);
     }
 
     /** Notifies a seeker their application was received. */
@@ -41,32 +36,29 @@ public class NotificationService extends AbstractNotificationService {
         InAppNotification inApp = new InAppNotification(seekerEmail, subject, message);
         inApp.send();
         notificationRepo.save(inApp);
-        sendEmail(seekerEmail, subject, message);
     }
 
-    /**
-     * Notifies an employer that a new applicant has applied to their job.
-     * Called by ApplicationService.apply() right after the application is saved.
-     *
-     * @param employerEmail email of the employer who posted the job
-     * @param companyName   company name for personalisation
-     * @param seekerName    the name of the applicant
-     * @param jobTitle      the job the seeker applied to
-     */
-    public void notifyNewApplication(String employerEmail, String companyName,
-                                     String seekerName, String jobTitle) {
-        String subject = "New Application – " + jobTitle;
-        String message = "Hi " + companyName + ",\n\n"
-                + seekerName + " has applied for your job posting: \"" + jobTitle + "\".\n\n"
-                + "Log in to the Job Portal to review their profile and resume, "
-                + "and move them through the hiring pipeline.\n\n"
-                + "Best regards,\nJob Portal Team";
-
-        InAppNotification inApp = new InAppNotification(employerEmail, subject, message);
-        inApp.send();
-        notificationRepo.save(inApp);
-        sendEmail(employerEmail, subject, message);
-    }
+//    /**
+//     * Notifies an employer that a new applicant has applied to their job.
+//     * Called by ApplicationService.apply() right after the application is saved.
+//     *
+//     * @param employerEmail email of the employer who posted the job
+//     * @param companyName   company name for personalisation
+//     * @param seekerName    the name of the applicant
+//     * @param jobTitle      the job the seeker applied to
+//     */
+//    public void notifyNewApplication(String employerEmail, String companyName,
+//                                     String seekerName, String jobTitle) {
+//        String subject = "New Application – " + jobTitle;
+//        String message = "Hi " + companyName + ",\n\n"
+//                + seekerName + " has applied for your job posting: \"" + jobTitle + "\".\n\n"
+//                + "Log in to the Job Portal to review their profile and resume, "
+//                + "and move them through the hiring pipeline.\n\n"
+//                + "Best regards,\nJob Portal Team";
+//        InAppNotification inApp = new InAppNotification(employerEmail, subject, message);
+//        inApp.send();
+//        notificationRepo.save(inApp);
+//    }
 
     public List<Notification> getNotificationsForUser(String email) {
         return notificationRepo.findByRecipientOrderByCreatedAtDesc(email);
@@ -93,22 +85,6 @@ public class NotificationService extends AbstractNotificationService {
             notification.setRead(true);
         }
         notificationRepo.saveAll(unread);
-    }
-
-    @Async
-    public void sendEmail(String to, String subject, String body) {
-        try {
-            EmailNotification emailNotification = new EmailNotification(to, subject, body);
-            emailNotification.send();
-            SimpleMailMessage mail = new SimpleMailMessage();
-            mail.setTo(to);
-            mail.setSubject(subject);
-            mail.setText(body);
-            mailSender.send(mail);
-            notificationRepo.save(emailNotification);
-        } catch (Exception e) {
-            System.err.println("[Email] Failed to send to " + to + ": " + e.getMessage());
-        }
     }
 
     private String buildStageChangeMessage(String name, String jobTitle, AppStage stage) {

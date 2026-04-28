@@ -110,20 +110,20 @@ public abstract class Notification {
         return recipient;
     }
 
-    /** Sets the recipient email */
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
-    }
+//    /** Sets the recipient email */
+//    public void setRecipient(String recipient) {
+//        this.recipient = recipient;
+//    }
 
     /** Returns the subject line */
     public String getSubject() {
         return subject;
     }
 
-    /** Sets the subject line */
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
+//    /** Sets the subject line */
+//    public void setSubject(String subject) {
+//        this.subject = subject;
+//    }
 
     /** Returns the message body */
     public String getMessage() {
@@ -145,15 +145,15 @@ public abstract class Notification {
         this.isRead = read;
     }
 
-    /** Returns when this notification was created */
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    /** Returns when this notification was sent */
-    public LocalDateTime getSentAt() {
-        return sentAt;
-    }
+//    /** Returns when this notification was created */
+//    public LocalDateTime getCreatedAt() {
+//        return createdAt;
+//    }
+//
+//    /** Returns when this notification was sent */
+//    public LocalDateTime getSentAt() {
+//        return sentAt;
+//    }
 
     /** Sets when this notification was sent */
     public void setSentAt(LocalDateTime sentAt) {

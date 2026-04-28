@@ -22,10 +22,10 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     /** Check if a seeker already applied to a specific job */
     boolean existsByJobSeekerIdAndJobListingId(Long jobSeekerId, Long jobListingId);
 
-    /** Find one specific application by seeker + job */
-    Optional<Application> findByJobSeekerIdAndJobListingId(Long jobSeekerId, Long jobListingId);
-
-    /** Find all applications for all jobs posted by an employer */
-    @Query("SELECT a FROM Application a WHERE a.jobListing.employer.id = :employerId ORDER BY a.matchScore DESC")
-    List<Application> findByEmployerId(@Param("employerId") Long employerId);
+//    /** Find one specific application by seeker + job */
+//    Optional<Application> findByJobSeekerIdAndJobListingId(Long jobSeekerId, Long jobListingId);
+//
+//    /** Find all applications for all jobs posted by an employer */
+//    @Query("SELECT a FROM Application a WHERE a.jobListing.employer.id = :employerId ORDER BY a.matchScore DESC")
+//    List<Application> findByEmployerId(@Param("employerId") Long employerId);
 }

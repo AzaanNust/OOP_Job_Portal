@@ -30,7 +30,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-mail")
 
 	// ── WebFlux (needed for WebClient to call Claude AI API) ──────
 	implementation("org.springframework.boot:spring-boot-starter-webflux")

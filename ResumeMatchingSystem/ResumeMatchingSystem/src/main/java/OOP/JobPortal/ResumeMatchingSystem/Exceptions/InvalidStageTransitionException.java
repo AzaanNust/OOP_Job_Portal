@@ -35,14 +35,14 @@ public class InvalidStageTransitionException extends Exception {
         super(message);
     }
 
-    /**
-     * Method Overloading: second constructor with cause.
-     * Allows wrapping another exception as the cause.
-     *
-     * @param message description of what went wrong
-     * @param cause   the underlying exception that caused this
-     */
-    public InvalidStageTransitionException(String message, Throwable cause) {
-        super(message, cause);
-    }
+//    /**
+//     * Method Overloading: second constructor with cause.
+//     * Allows wrapping another exception as the cause.
+//     *
+//     * @param message description of what went wrong
+//     * @param cause   the underlying exception that caused this
+//     */
+//    public InvalidStageTransitionException(String message, Throwable cause) {
+//        super(message, cause);
+//    }
 }

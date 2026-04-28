@@ -46,10 +46,10 @@ public class ResumeController {
             @AuthenticationPrincipal JobSeeker seeker) {
         byte[] pdfBytes = resumeService.getResumePdfBytes(seeker.getId());
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"resume_" + seeker.getId() + ".pdf\"")
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(pdfBytes);
+                .header(HttpHeaders.CONTENT_DISPOSITION, //Content-Disposition:Controls how file is handled.
+                        "attachment; filename=\"resume_" + seeker.getId() + ".pdf\"") //attachment Means:Force download
+                .contentType(MediaType.APPLICATION_PDF) //Tells browser:“This response is a PDF file”
+                .body(pdfBytes); //actual file content (binary data)
     }
 
     @GetMapping("/{seekerId}/download")

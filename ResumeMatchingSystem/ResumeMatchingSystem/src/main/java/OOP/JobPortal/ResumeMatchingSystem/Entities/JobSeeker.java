@@ -258,24 +258,24 @@ public class JobSeeker extends User {
         this.resume = resume;
     }
 
-    /** Returns the list of all applications this seeker has submitted */
-    public List<Application> getApplications() {
-        return applications;
-    }
+//    /** Returns the list of all applications this seeker has submitted */
+//    public List<Application> getApplications() {
+//        return applications;
+//    }
 
-    /** Sets the applications list (used by JPA) */
-    public void setApplications(List<Application> applications) {
-        this.applications = applications;
-    }
+//    /** Sets the applications list (used by JPA) */
+//    public void setApplications(List<Application> applications) {
+//        this.applications = applications;
+//    }
 
     // ================================================================
     // Static Member Getter
     // ================================================================
 
-    /** Returns how many JobSeeker instances were created this session */
-    public static int getTotalSeekersCreated() {
-        return totalSeekersCreated;
-    }
+//    /** Returns how many JobSeeker instances were created this session */
+//    public static int getTotalSeekersCreated() {
+//        return totalSeekersCreated;
+//    }
 
     // ================================================================
     // Business Logic Methods

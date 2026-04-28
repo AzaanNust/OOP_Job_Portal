@@ -1,6 +1,8 @@
 package OOP.JobPortal.ResumeMatchingSystem.DTOs.request;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.validation.constraints.*;
 /** Registration payload for employers */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class RegisterEmployerRequest {
     @NotBlank private String fullName;
     @Email @NotBlank private String email;
@@ -20,17 +22,17 @@ public class RegisterEmployerRequest {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
     public String getCompanyName() { return companyName; }
-    public void setCompanyName(String companyName) { this.companyName = companyName; }
+    //public void setCompanyName(String companyName) { this.companyName = companyName; }
     public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    //public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
     public String getCompanyWebsite() { return companyWebsite; }
-    public void setCompanyWebsite(String companyWebsite) { this.companyWebsite = companyWebsite; }
+    //public void setCompanyWebsite(String companyWebsite) { this.companyWebsite = companyWebsite; }
     public String getIndustry() { return industry; }
-    public void setIndustry(String industry) { this.industry = industry; }
+    //public void setIndustry(String industry) { this.industry = industry; }
     public String getCompanyLocation() { return companyLocation; }
-    public void setCompanyLocation(String companyLocation) { this.companyLocation = companyLocation; }
+    //public void setCompanyLocation(String companyLocation) { this.companyLocation = companyLocation; }
     public String getCompanyDescription() { return companyDescription; }
-    public void setCompanyDescription(String companyDescription) { this.companyDescription = companyDescription; }
+    //public void setCompanyDescription(String companyDescription) { this.companyDescription = companyDescription; }
     public String getCompanySize() { return companySize; }
-    public void setCompanySize(String companySize) { this.companySize = companySize; }
+    //public void setCompanySize(String companySize) { this.companySize = companySize; }
 }

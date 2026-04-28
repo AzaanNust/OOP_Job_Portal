@@ -99,17 +99,17 @@ public class Resume implements Serializable {
     @Column(name = "github_url")
     private String githubUrl;
 
-    // ── AI generation ──────────────────────────────────────────────
-
-    @Column(name = "ai_generated_html", columnDefinition = "LONGTEXT")
-    private String aiGeneratedHtml;
-
-    @Column(name = "ai_generated_text", columnDefinition = "LONGTEXT")
-    private String aiGeneratedText;
-
-    @Column(name = "last_ai_generated_at")
-    private LocalDateTime lastAiGeneratedAt;
-
+//    // ── AI generation ──────────────────────────────────────────────
+//
+//    @Column(name = "ai_generated_html", columnDefinition = "LONGTEXT")
+//    private String aiGeneratedHtml;
+//
+//    @Column(name = "ai_generated_text", columnDefinition = "LONGTEXT")
+//    private String aiGeneratedText;
+//
+//    @Column(name = "last_ai_generated_at")
+//    private LocalDateTime lastAiGeneratedAt;
+//
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -252,11 +252,11 @@ public class Resume implements Serializable {
     public void setLinkedinUrl(String s)                         { this.linkedinUrl = s; }
     public String getGithubUrl()                                 { return githubUrl; }
     public void setGithubUrl(String s)                           { this.githubUrl = s; }
-    public String getAiGeneratedHtml()                           { return aiGeneratedHtml; }
-    public void setAiGeneratedHtml(String s)                     { this.aiGeneratedHtml = s; this.lastAiGeneratedAt = LocalDateTime.now(); this.updatedAt = LocalDateTime.now(); }
-    public String getAiGeneratedText()                           { return aiGeneratedText; }
-    public void setAiGeneratedText(String s)                     { this.aiGeneratedText = s; }
-    public LocalDateTime getLastAiGeneratedAt()                  { return lastAiGeneratedAt; }
+//    public String getAiGeneratedHtml()                           { return aiGeneratedHtml; }
+//    public void setAiGeneratedHtml(String s)                     { this.aiGeneratedHtml = s; this.lastAiGeneratedAt = LocalDateTime.now(); this.updatedAt = LocalDateTime.now(); }
+//    public String getAiGeneratedText()                           { return aiGeneratedText; }
+//    public void setAiGeneratedText(String s)                     { this.aiGeneratedText = s; }
+//    public LocalDateTime getLastAiGeneratedAt()                  { return lastAiGeneratedAt; }
     public LocalDateTime getCreatedAt()                          { return createdAt; }
     public LocalDateTime getUpdatedAt()                          { return updatedAt; }
 

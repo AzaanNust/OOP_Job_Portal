@@ -6,6 +6,7 @@
 # ================================================================
 
 server:
+  address: 0.0.0.0
   port: 8080
 
 spring:
@@ -32,19 +33,6 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
 
-  # ── Email (Gmail SMTP) ─────────────────────────────────────────
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ${MAIL_USERNAME:your_email@gmail.com}
-    password: ${MAIL_PASSWORD:your_app_password}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
   # ── File Upload Size Limits ────────────────────────────────────
   servlet:
     multipart:
@@ -55,13 +43,6 @@ spring:
 jwt:
   secret: ${JWT_SECRET:JobPortalSuperSecretKeyThatIsAtLeast256BitsLongForHS256Algorithm2024}
   expiration: 86400000        # 24 hours in milliseconds
-
-# ── Claude AI API ─────────────────────────────────────────────
-claude:
-  api:
-    key: ${CLAUDE_API_KEY:your_claude_api_key_here}
-    url: https://api.anthropic.com/v1/messages
-  model: claude-haiku-4-5-20251001
 
 # ── Swagger / OpenAPI ─────────────────────────────────────────
 springdoc:

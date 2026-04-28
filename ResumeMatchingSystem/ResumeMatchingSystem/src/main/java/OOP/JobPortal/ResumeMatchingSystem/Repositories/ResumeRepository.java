@@ -13,6 +13,6 @@ public interface ResumeRepository extends JpaRepository<Resume, Long> {
     /** Find a resume by its owner's ID */
     Optional<Resume> findByJobSeekerId(Long jobSeekerId);
 
-    /** Check if a resume exists for a given seeker */
-    boolean existsByJobSeekerId(Long jobSeekerId);
+//    /** Check if a resume exists for a given seeker */
+//    boolean existsByJobSeekerId(Long jobSeekerId);
 }

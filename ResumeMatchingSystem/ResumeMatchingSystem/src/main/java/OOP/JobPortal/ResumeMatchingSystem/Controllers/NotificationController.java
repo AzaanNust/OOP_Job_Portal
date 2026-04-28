@@ -28,11 +28,11 @@ public class NotificationController {
         return ResponseEntity.ok(notificationService.getNotificationsForUser(user.getEmail()));
     }
 
-    @GetMapping("/unread")
-    @Operation(summary = "Get unread notifications")
-    public ResponseEntity<List<Notification>> getUnread(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(notificationService.getUnreadNotifications(user.getEmail()));
-    }
+//    @GetMapping("/unread")
+//    @Operation(summary = "Get unread notifications")
+//    public ResponseEntity<List<Notification>> getUnread(@AuthenticationPrincipal User user) {
+//        return ResponseEntity.ok(notificationService.getUnreadNotifications(user.getEmail()));
+//    }
 
     @GetMapping("/count")
     @Operation(summary = "Get count of unread notifications (for bell badge)")

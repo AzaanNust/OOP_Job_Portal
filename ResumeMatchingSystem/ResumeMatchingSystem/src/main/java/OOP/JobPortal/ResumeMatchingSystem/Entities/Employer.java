@@ -198,30 +198,30 @@ public class Employer extends User {
         this.companySize = companySize;
     }
 
-    /** Returns all job listings posted by this employer */
-    public List<JobListing> getJobListings() {
-        return jobListings;
-    }
-
-    /** Sets the job listings list (used by JPA) */
-    public void setJobListings(List<JobListing> jobListings) {
-        this.jobListings = jobListings;
-    }
-
-    /** Returns how many Employer instances were created this session */
-    public static int getTotalEmployersCreated() {
-        return totalEmployersCreated;
-    }
-
-    /** Returns how many job listings this employer has posted */
-    public int getTotalJobsPosted() {
-        return jobListings.size();
-    }
-
-    /** Returns count of open job listings */
-    public long getOpenJobCount() {
-        return jobListings.stream()
-                .filter(j -> j.getStatus() == OOP.JobPortal.ResumeMatchingSystem.Enums.JobStatus.OPEN)
-                .count();
-    }
+//    /** Returns all job listings posted by this employer */
+//    public List<JobListing> getJobListings() {
+//        return jobListings;
+//    }
+//
+//    /** Sets the job listings list (used by JPA) */
+//    public void setJobListings(List<JobListing> jobListings) {
+//        this.jobListings = jobListings;
+//    }
+//
+//    /** Returns how many Employer instances were created this session */
+//    public static int getTotalEmployersCreated() {
+//        return totalEmployersCreated;
+//    }
+//
+//    /** Returns how many job listings this employer has posted */
+//    public int getTotalJobsPosted() {
+//        return jobListings.size();
+//    }
+//
+//    /** Returns count of open job listings */
+//    public long getOpenJobCount() {
+//        return jobListings.stream()
+//                .filter(j -> j.getStatus() == OOP.JobPortal.ResumeMatchingSystem.Enums.JobStatus.OPEN)
+//                .count();
+//    }
 }

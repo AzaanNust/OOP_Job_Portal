@@ -165,29 +165,29 @@ public abstract class User implements UserDetails {
                 + " | Total created this session: " + User.totalUsersCreated);
     }
 
-    // ================================================================
-    //  Copy Constructor
-    // Creates a new User by copying data from an existing one.
-    // Useful for creating a duplicate profile or backup.
-    // ================================================================
-
-    /**
-     * Copy constructor — creates a new User with the same data as 'other'.
-     * Note: id and timestamps are NOT copied because the copy is a new record.
-     *
-     * @param other the User to copy data from
-     */
-    protected User(User other) {
-        this.fullName    = other.fullName;
-        this.email       = other.email + "_copy"; // Make email unique
-        this.password    = other.password;
-        this.role        = other.role;
-        this.phoneNumber = other.phoneNumber;
-        this.isActive    = other.isActive;
-        this.createdAt   = LocalDateTime.now();   // Fresh timestamps
-        this.updatedAt   = LocalDateTime.now();
-        User.totalUsersCreated++;
-    }
+//    // ================================================================
+//    //  Copy Constructor
+//    // Creates a new User by copying data from an existing one.
+//    // Useful for creating a duplicate profile or backup.
+//    // ================================================================
+//
+//    /**
+//     * Copy constructor — creates a new User with the same data as 'other'.
+//     * Note: id and timestamps are NOT copied because the copy is a new record.
+//     *
+//     * @param other the User to copy data from
+//     */
+//    protected User(User other) {
+//        this.fullName    = other.fullName;
+//        this.email       = other.email + "_copy"; // Make email unique
+//        this.password    = other.password;
+//        this.role        = other.role;
+//        this.phoneNumber = other.phoneNumber;
+//        this.isActive    = other.isActive;
+//        this.createdAt   = LocalDateTime.now();   // Fresh timestamps
+//        this.updatedAt   = LocalDateTime.now();
+//        User.totalUsersCreated++;
+//    }
 
     // ================================================================
     //  Lifecycle Hooks (called automatically by JPA)
@@ -273,10 +273,10 @@ public abstract class User implements UserDetails {
         return role;
     }
 
-    /** Sets the user's role */
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
+//    /** Sets the user's role */
+//    public void setRole(UserRole role) {
+//        this.role = role;
+//    }
 
     /** Returns the optional phone number */
     public String getPhoneNumber() {
@@ -288,20 +288,20 @@ public abstract class User implements UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
-    /** Returns when this account was created */
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    /** Returns when this account was last updated */
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    /** Returns whether this account is active */
-    public boolean isActive() {
-        return isActive;
-    }
+//    /** Returns when this account was created */
+//    public LocalDateTime getCreatedAt() {
+//        return createdAt;
+//    }
+//
+//    /** Returns when this account was last updated */
+//    public LocalDateTime getUpdatedAt() {
+//        return updatedAt;
+//    }
+//
+//    /** Returns whether this account is active */
+//    public boolean isActive() {
+//        return isActive;
+//    }
 
     /** Activates or deactivates this account */
     public void setActive(boolean active) {
@@ -413,26 +413,26 @@ public abstract class User implements UserDetails {
     // Two methods with the same name but different parameter lists.
     // Java chooses which to call based on what arguments are provided.
     // ================================================================
-
-    /**
-     * Checks if this user matches a given email (case-insensitive).
-     *
-     * @param searchEmail email to search for
-     * @return true if emails match
-     */
-    public boolean matches(String searchEmail) {
-        return this.email != null && this.email.equalsIgnoreCase(searchEmail);
-    }
-
-    /**
-     * OVERLOADED VERSION: Checks if this user matches both email AND role.
-     * Same method name, different parameters — that's method overloading.
-     *
-     * @param searchEmail email to match
-     * @param searchRole  role to match
-     * @return true if both email and role match
-     */
-    public boolean matches(String searchEmail, UserRole searchRole) {
-        return this.matches(searchEmail) && this.role == searchRole;
-    }
+//
+//    /**
+//     * Checks if this user matches a given email (case-insensitive).
+//     *
+//     * @param searchEmail email to search for
+//     * @return true if emails match
+//     */
+//    public boolean matches(String searchEmail) {
+//        return this.email != null && this.email.equalsIgnoreCase(searchEmail);
+//    }
+//
+//    /**
+//     * OVERLOADED VERSION: Checks if this user matches both email AND role.
+//     * Same method name, different parameters — that's method overloading.
+//     *
+//     * @param searchEmail email to match
+//     * @param searchRole  role to match
+//     * @return true if both email and role match
+//     */
+//    public boolean matches(String searchEmail, UserRole searchRole) {
+//        return this.matches(searchEmail) && this.role == searchRole;
+//    }
 }

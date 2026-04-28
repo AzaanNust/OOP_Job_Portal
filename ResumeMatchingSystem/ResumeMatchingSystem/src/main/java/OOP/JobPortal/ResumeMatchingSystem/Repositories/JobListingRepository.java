@@ -53,6 +53,6 @@ public interface JobListingRepository extends JpaRepository<JobListing, Long> {
     /** All jobs posted by a specific employer, newest first */
     List<JobListing> findByEmployerIdOrderByCreatedAtDesc(Long employerId);
 
-    /** All open jobs (for homepage listing) */
-    Page<JobListing> findByStatusOrderByCreatedAtDesc(JobStatus status, Pageable pageable);
+//    /** All open jobs (for homepage listing) */
+//    Page<JobListing> findByStatusOrderByCreatedAtDesc(JobStatus status, Pageable pageable);
 }

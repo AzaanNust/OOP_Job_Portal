@@ -4,11 +4,11 @@ import OOP.JobPortal.ResumeMatchingSystem.DTOs.request.LoginRequest;
 import OOP.JobPortal.ResumeMatchingSystem.DTOs.request.RegisterEmployerRequest;
 import OOP.JobPortal.ResumeMatchingSystem.DTOs.request.RegisterJobSeekerRequest;
 import OOP.JobPortal.ResumeMatchingSystem.DTOs.response.AuthResponse;
-import OOP.JobPortal.ResumeMatchingSystem.Entities.Admin;
+//import OOP.JobPortal.ResumeMatchingSystem.Entities.Admin;
 import OOP.JobPortal.ResumeMatchingSystem.Entities.Employer;
 import OOP.JobPortal.ResumeMatchingSystem.Entities.JobSeeker;
 import OOP.JobPortal.ResumeMatchingSystem.Exceptions.BusinessException;
-import OOP.JobPortal.ResumeMatchingSystem.Repositories.AdminRepository;
+//import OOP.JobPortal.ResumeMatchingSystem.Repositories.AdminRepository;
 import OOP.JobPortal.ResumeMatchingSystem.Repositories.EmployerRepository;
 import OOP.JobPortal.ResumeMatchingSystem.Repositories.JobSeekerRepository;
 import OOP.JobPortal.ResumeMatchingSystem.Security.JwtUtil;
@@ -56,8 +56,8 @@ public class AuthService extends AbstractAuthService {
     @Autowired
     private EmployerRepository employerRepo;
 
-    @Autowired
-    private AdminRepository adminRepo;
+//    @Autowired
+//    private AdminRepository adminRepo;
 
     /**
      * PasswordEncoder uses BCrypt to hash passwords.
@@ -203,11 +203,11 @@ public class AuthService extends AbstractAuthService {
                 yield new AuthResponse(jwtUtil.generateToken(userDetails, role),
                         e.getId(), e.getFullName(), e.getEmail(), e.getRole());
             }
-            case "ADMIN" -> {
-                Admin a = adminRepo.findByEmail(req.getEmail()).orElseThrow();
-                yield new AuthResponse(jwtUtil.generateToken(userDetails, role),
-                        a.getId(), a.getFullName(), a.getEmail(), a.getRole());
-            }
+//            case "ADMIN" -> {
+//                Admin a = adminRepo.findByEmail(req.getEmail()).orElseThrow();
+//                yield new AuthResponse(jwtUtil.generateToken(userDetails, role),
+//                        a.getId(), a.getFullName(), a.getEmail(), a.getRole());
+//            }
             default -> throw new BusinessException("Unknown user role: " + role);
         };
     }
@@ -224,7 +224,7 @@ public class AuthService extends AbstractAuthService {
      */
     private boolean emailAlreadyExists(String email) {
         return jobSeekerRepo.existsByEmail(email)
-                || employerRepo.existsByEmail(email)
-                || adminRepo.existsByEmail(email);
+                || employerRepo.existsByEmail(email);
+                //|| adminRepo.existsByEmail(email);
     }
 }

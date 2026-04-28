@@ -1,6 +1,9 @@
 package OOP.JobPortal.ResumeMatchingSystem.DTOs.request;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 /** Payload for updating an employer's profile and company details */
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class UpdateEmployerRequest {
     private String fullName;
     private String phoneNumber;
@@ -14,19 +17,19 @@ public class UpdateEmployerRequest {
     public UpdateEmployerRequest() {}
 
     public String getFullName()                       { return fullName; }
-    public void   setFullName(String v)               { this.fullName = v; }
+    //public void   setFullName(String v)               { this.fullName = v; }
     public String getPhoneNumber()                    { return phoneNumber; }
-    public void   setPhoneNumber(String v)            { this.phoneNumber = v; }
+    //public void   setPhoneNumber(String v)            { this.phoneNumber = v; }
     public String getCompanyName()                    { return companyName; }
-    public void   setCompanyName(String v)            { this.companyName = v; }
+    //public void   setCompanyName(String v)            { this.companyName = v; }
     public String getIndustry()                       { return industry; }
-    public void   setIndustry(String v)               { this.industry = v; }
+    //public void   setIndustry(String v)               { this.industry = v; }
     public String getCompanyLocation()                { return companyLocation; }
-    public void   setCompanyLocation(String v)        { this.companyLocation = v; }
+    //public void   setCompanyLocation(String v)        { this.companyLocation = v; }
     public String getCompanyWebsite()                 { return companyWebsite; }
-    public void   setCompanyWebsite(String v)         { this.companyWebsite = v; }
+    //public void   setCompanyWebsite(String v)         { this.companyWebsite = v; }
     public String getCompanyDescription()             { return companyDescription; }
-    public void   setCompanyDescription(String v)     { this.companyDescription = v; }
+    //public void   setCompanyDescription(String v)     { this.companyDescription = v; }
     public String getCompanySize()                    { return companySize; }
-    public void   setCompanySize(String v)            { this.companySize = v; }
+    //public void   setCompanySize(String v)            { this.companySize = v; }
 }

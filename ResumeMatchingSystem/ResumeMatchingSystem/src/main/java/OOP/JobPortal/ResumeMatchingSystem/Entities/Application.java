@@ -154,30 +154,30 @@ public class Application {
         return jobSeeker;
     }
 
-    /** Sets the applicant */
-    public void setJobSeeker(JobSeeker jobSeeker) {
-        this.jobSeeker = jobSeeker;
-    }
+//    /** Sets the applicant */
+//    public void setJobSeeker(JobSeeker jobSeeker) {
+//        this.jobSeeker = jobSeeker;
+//    }
 
     /** Returns the target job listing */
     public JobListing getJobListing() {
         return jobListing;
     }
 
-    /** Sets the target job listing */
-    public void setJobListing(JobListing jobListing) {
-        this.jobListing = jobListing;
-    }
+//    /** Sets the target job listing */
+//    public void setJobListing(JobListing jobListing) {
+//        this.jobListing = jobListing;
+//    }
 
     /** Returns the match score (0.0 – 100.0) */
     public double getMatchScore() {
         return matchScore;
     }
 
-    /** Sets the match score */
-    public void setMatchScore(double matchScore) {
-        this.matchScore = matchScore;
-    }
+//    /** Sets the match score */
+//    public void setMatchScore(double matchScore) {
+//        this.matchScore = matchScore;
+//    }
 
     /** Returns the skills-to-improve string */
     public String getSkillsToImprove() {
@@ -194,10 +194,10 @@ public class Application {
         return stage;
     }
 
-    /** Sets the pipeline stage directly (used by JPA) */
-    public void setStage(AppStage stage) {
-        this.stage = stage;
-    }
+//    /** Sets the pipeline stage directly (used by JPA) */
+//    public void setStage(AppStage stage) {
+//        this.stage = stage;
+//    }
 
     /** Returns the cover letter text */
     public String getCoverLetter() {
@@ -224,10 +224,10 @@ public class Application {
         return appliedAt;
     }
 
-    /** Returns when this application was last updated */
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
+//    /** Returns when this application was last updated */
+//    public LocalDateTime getUpdatedAt() {
+//        return updatedAt;
+//    }
 
     // ================================================================
     // Exception Handling: try-catch-finally
@@ -304,10 +304,10 @@ public class Application {
         }
     }
 
-    /** Returns true if this application is in a terminal state */
-    public boolean isTerminal() {
-        return this.stage == AppStage.HIRED || this.stage == AppStage.REJECTED;
-    }
+//    /** Returns true if this application is in a terminal state */
+//    public boolean isTerminal() {
+//        return this.stage == AppStage.HIRED || this.stage == AppStage.REJECTED;
+//    }
 
     @Override
     public String toString() {

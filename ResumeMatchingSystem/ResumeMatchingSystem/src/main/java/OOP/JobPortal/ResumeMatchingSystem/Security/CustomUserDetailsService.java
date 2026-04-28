@@ -1,6 +1,6 @@
 package OOP.JobPortal.ResumeMatchingSystem.Security;
 
-import OOP.JobPortal.ResumeMatchingSystem.Repositories.AdminRepository;
+//import OOP.JobPortal.ResumeMatchingSystem.Repositories.AdminRepository;
 import OOP.JobPortal.ResumeMatchingSystem.Repositories.EmployerRepository;
 import OOP.JobPortal.ResumeMatchingSystem.Repositories.JobSeekerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +28,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private EmployerRepository employerRepo;
 
-    @Autowired
-    private AdminRepository adminRepo;
+//    @Autowired
+//    private AdminRepository adminRepo;
 
     /**
      * Searches all three user tables for a user with the given email.
@@ -54,10 +54,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // Search admins table last
-        var admin = adminRepo.findByEmail(email);
-        if (admin.isPresent()) {
-            return admin.get();
-        }
+//        var admin = adminRepo.findByEmail(email);
+//        if (admin.isPresent()) {
+//            return admin.get();
+//        }
 
         // No user found in any table
         throw new UsernameNotFoundException("No account found with email: " + email);
