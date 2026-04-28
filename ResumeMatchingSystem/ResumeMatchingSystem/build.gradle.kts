@@ -37,6 +37,12 @@ dependencies {
 	// ── MySQL Database Driver ─────────────────────────────────────
 	runtimeOnly("com.mysql:mysql-connector-j")
 
+	// ── PostgreSQL Driver (replaces MySQL) ────────────────────────
+	// Used for Neon (cloud PostgreSQL) in production and local dev.
+	// Neon provides a standard PostgreSQL connection string — this
+	// driver works with both local PostgreSQL and Neon identically.
+	runtimeOnly("org.postgresql:postgresql")
+
 	// ── JWT (JSON Web Token) for stateless authentication ─────────
 	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
