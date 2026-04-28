@@ -1,27 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--
+        WRITE_EXTERNAL_STORAGE: needed on Android 9 (API 28) and below
+        to write to the public Downloads folder.
+        On Android 10+ (API 29+) we use MediaStore — no permission needed.
+        maxSdkVersion=28 ensures the permission is not requested on Android 10+.
+    -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidOopProject">
+        android:theme="@style/Theme.AndroidOopProject"
+        android:usesCleartextTraffic="true">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.AndroidOopProject">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--
+            FileProvider — kept for future use / backward compat.
+            The PDF download now uses MediaStore (Android 10+) so this
+            is not directly used for PDFs, but keep it in case other
+            file sharing features need it.
+        -->
+        <!--
+        <provider>
+        → Declares a ContentProvider in Android (used for controlled data sharing)
+        → Here we are using FileProvider to securely share files with other apps
+
+        android:name="androidx.core.content.FileProvider"
+        → Built-in AndroidX class that safely exposes app files as content URIs
+        → Prevents exposing raw file paths (security requirement)
+
+        android:authorities="com.jobportal.resumematching.provider"
+        → Unique identifier for this provider
+        → Used when generating file URIs (must match in code)
+        → Usually based on app package name
+
+        android:exported="false"
+        → This provider is NOT publicly accessible to all apps
+        → Only apps granted permission can access shared files
+
+        android:grantUriPermissions="true"
+        → Allows temporary permission to other apps for accessing shared files
+        → Required when sending files via Intent (e.g., share image/PDF)
+
+        <meta-data>
+        → Additional configuration for the FileProvider
+
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        → Standard key required by FileProvider
+        → Tells Android where file paths are defined
+
+        android:resource="@xml/file_paths"
+        → Points to res/xml/file_paths.xml
+        → This file defines which directories/files can be shared
+
+        Purpose:
+        → Enables secure file sharing using content:// URIs instead of file://
+        → Required when sending files to other apps (camera, gallery, email, etc.)
+        -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="oop.project.androidoopproject.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
