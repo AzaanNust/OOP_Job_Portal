@@ -12,9 +12,6 @@ import OOP.JobPortal.ResumeMatchingSystem.Repositories.EmployerRepository;
 import OOP.JobPortal.ResumeMatchingSystem.Repositories.JobListingRepository;
 import OOP.JobPortal.ResumeMatchingSystem.Services.AbstractJobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,97 +26,129 @@ public class JobService extends AbstractJobService {
     @Autowired private EmployerRepository   employerRepo;
 
     @Transactional
-    public JobListingResponse postJob(Long employerId, JobListingRequest req) {
+    public JobListingResponse postJob(Long employerId, JobListingRequest request) {
+
         Employer employer = employerRepo.findById(employerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employer", employerId));
-        JobListing job = new JobListing(employer, req.getTitle(),
-                req.getDescription(), req.getLocation(), req.getShiftType());
-        job.setRequiredSkills(req.getRequiredSkills());
-        job.setPreferredSkills(req.getPreferredSkills());
-        job.setMinExperienceYears(req.getMinExperienceYears());
-        job.setMaxExperienceYears(req.getMaxExperienceYears());
-        job.setMinSalary(req.getMinSalary());
-        job.setMaxSalary(req.getMaxSalary());
-        job.setJobType(req.getJobType());
-        job.setOpenPositions(req.getOpenPositions());
+
+        JobListing job = new JobListing(
+                employer,
+                request.getTitle(),
+                request.getDescription(),
+                request.getLocation(),
+                request.getShiftType()
+        );
+
+        job.setRequiredSkills(request.getRequiredSkills());
+        job.setPreferredSkills(request.getPreferredSkills());
+        job.setMinExperienceYears(request.getMinExperienceYears());
+        job.setMaxExperienceYears(request.getMaxExperienceYears());
+        job.setMinSalary(request.getMinSalary());
+        job.setMaxSalary(request.getMaxSalary());
+        job.setJobType(request.getJobType());
+        job.setOpenPositions(request.getOpenPositions());
         job.setStatus(JobStatus.OPEN);
-        if (req.getDeadline() != null && !req.getDeadline().isBlank()) {
-            try { job.setDeadline(LocalDateTime.parse(req.getDeadline())); }
-            catch (Exception e) { throw new BusinessException("Invalid deadline. Use: 2024-12-31T23:59:59"); }
+
+        if (request.getDeadline() != null && !request.getDeadline().isBlank()) {
+            try {
+                job.setDeadline(LocalDateTime.parse(request.getDeadline()));
+            } catch (Exception e) {
+                throw new BusinessException(
+                        "Invalid deadline format. Use: 2024-12-31T23:59:59");
+            }
         }
+
         return JobListingResponse.from(jobRepo.save(job));
     }
 
     /**
-     * Searches open jobs. When title/location/shift are all null -> returns ALL open jobs.
-     * Title search is partial and case-insensitive.
+     * Searches open jobs with optional filters.
+     * Returns a plain List — avoids Spring PageImpl serialization issues
+     * which caused Gson on Android to silently return null content.
      */
-    public Page<JobListingResponse> searchJobs(String title, String location,
-                                               ShiftType shift, int page, int size) {
-        String t = (title != null && !title.isBlank())       ? title.trim()    : null;
-        String l = (location != null && !location.isBlank()) ? location.trim() : null;
-        PageRequest pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        return jobRepo.searchJobs(t, l, shift, pageable).map(JobListingResponse::from);
+    public List<JobListingResponse> searchJobs(String title, String location, ShiftType shift) {
+
+        String normalizedTitle    = (title    != null && title.isBlank())    ? null : title;
+        String normalizedLocation = (location != null && location.isBlank()) ? null : location;
+
+        return jobRepo.searchJobsList(normalizedTitle, normalizedLocation, shift)
+                .stream()
+                .map(JobListingResponse::from)
+                .collect(Collectors.toList());
     }
 
     public JobListingResponse getJobById(Long jobId) {
-        return JobListingResponse.from(jobRepo.findById(jobId)
-                .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId)));
+        return JobListingResponse.from(
+                jobRepo.findById(jobId)
+                        .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId))
+        );
     }
 
     public List<JobListingResponse> getJobsByEmployer(Long employerId) {
         return jobRepo.findByEmployerIdOrderByCreatedAtDesc(employerId)
-                .stream().map(JobListingResponse::from).collect(Collectors.toList());
+                .stream()
+                .map(JobListingResponse::from)
+                .collect(Collectors.toList());
     }
 
     @Transactional
-    public JobListingResponse updateJob(Long jobId, Long employerId, JobListingRequest req) {
+    public JobListingResponse updateJob(Long jobId, Long employerId, JobListingRequest request) {
+
         JobListing job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId));
+
         if (!job.getEmployer().getId().equals(employerId))
             throw new BusinessException("You can only edit your own job listings.");
-        job.setTitle(req.getTitle());
-        job.setDescription(req.getDescription());
-        job.setLocation(req.getLocation());
-        job.setShiftType(req.getShiftType());
-        job.setRequiredSkills(req.getRequiredSkills());
-        job.setPreferredSkills(req.getPreferredSkills());
-        job.setMinExperienceYears(req.getMinExperienceYears());
-        job.setMinSalary(req.getMinSalary());
-        job.setMaxSalary(req.getMaxSalary());
-        job.setJobType(req.getJobType());
+
+        job.setTitle(request.getTitle());
+        job.setDescription(request.getDescription());
+        job.setLocation(request.getLocation());
+        job.setShiftType(request.getShiftType());
+        job.setRequiredSkills(request.getRequiredSkills());
+        job.setPreferredSkills(request.getPreferredSkills());
+        job.setMinExperienceYears(request.getMinExperienceYears());
+        job.setMinSalary(request.getMinSalary());
+        job.setMaxSalary(request.getMaxSalary());
+        job.setJobType(request.getJobType());
+
         return JobListingResponse.from(jobRepo.save(job));
     }
 
     @Transactional
     public JobListingResponse closeJob(Long jobId, Long employerId) {
+
         JobListing job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId));
+
         if (!job.getEmployer().getId().equals(employerId))
             throw new BusinessException("You can only close your own job listings.");
+
         job.closeJob();
         return JobListingResponse.from(jobRepo.save(job));
     }
 
-    /** Reactivates a CLOSED job back to OPEN */
     @Transactional
     public JobListingResponse reactivateJob(Long jobId, Long employerId) {
+
         JobListing job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId));
+
         if (!job.getEmployer().getId().equals(employerId))
             throw new BusinessException("You can only reactivate your own job listings.");
-        if (job.getStatus() == JobStatus.OPEN)
-            throw new BusinessException("Job is already open.");
+
         job.setStatus(JobStatus.OPEN);
         return JobListingResponse.from(jobRepo.save(job));
     }
 
     @Transactional
     public void deleteJob(Long jobId, Long employerId) {
+
         JobListing job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("JobListing", jobId));
+
         if (!job.getEmployer().getId().equals(employerId))
             throw new BusinessException("You can only delete your own job listings.");
+
         jobRepo.delete(job);
     }
 }

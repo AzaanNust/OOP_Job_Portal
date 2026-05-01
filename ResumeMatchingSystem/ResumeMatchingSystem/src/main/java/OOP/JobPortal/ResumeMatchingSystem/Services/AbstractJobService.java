@@ -11,8 +11,7 @@ public abstract class AbstractJobService {
 
     public abstract JobListingResponse postJob(Long employerId, JobListingRequest request);
 
-    public abstract Page<JobListingResponse> searchJobs(String title, String location,
-                                                        ShiftType shift, int page, int size);
+    public abstract List<JobListingResponse> searchJobs(String title, String location, ShiftType shift);
 
     public abstract JobListingResponse getJobById(Long jobId);
 

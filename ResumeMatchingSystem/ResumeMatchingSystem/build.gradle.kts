@@ -31,12 +31,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
-	// ── WebFlux (needed for WebClient to call Claude AI API) ──────
-	implementation("org.springframework.boot:spring-boot-starter-webflux")
-
-	// ── MySQL Database Driver ─────────────────────────────────────
-	runtimeOnly("com.mysql:mysql-connector-j")
-
 	// ── PostgreSQL Driver (replaces MySQL) ────────────────────────
 	// Used for Neon (cloud PostgreSQL) in production and local dev.
 	// Neon provides a standard PostgreSQL connection string — this
