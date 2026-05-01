@@ -1,0 +1,73 @@
+# ================================================================
+# application.yml  –  Job Portal Backend Configuration
+# ================================================================
+# YAML uses indentation (2 spaces) to show hierarchy.
+# This is cleaner than .properties files for nested config.
+# ================================================================
+
+server:
+  address: 0.0.0.0
+  port: 8080
+
+spring:
+  application:
+    name: JobPortal-ResumeMatchingSystem
+
+  # ── PostgreSQL Database ────────────────────────────────────────
+  # LOCAL:      uses localhost PostgreSQL (install PostgreSQL locally)
+  # PRODUCTION: Render sets DATABASE_URL to your Neon connection string
+  #
+  # Neon connection string format:
+  #   postgresql://user:password@host.neon.tech/dbname?sslmode=require
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/job_portal_db}
+    driver-class-name: org.postgresql.Driver
+    # HikariCP connection pool settings — important for Neon
+    # Neon serverless databases sleep when idle, so keep pool small
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 60000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  # ── JPA / Hibernate ────────────────────────────────────────────
+  jpa:
+    hibernate:
+      # update → auto-creates/updates tables from @Entity classes
+      # Never use 'create' in production — it drops all data
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        # PostgreSQL dialect — replaces MySQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    # Required for Neon — always use SSL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  # ── File Upload Size Limits ────────────────────────────────────
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# ── JWT Configuration ──────────────────────────────────────────
+jwt:
+  secret: ${JWT_SECRET:JobPortalSuperSecretKeyThatIsAtLeast256BitsLongForHS256Algorithm2024}
+  expiration: 86400000        # 24 hours in milliseconds
+
+# ── Swagger / OpenAPI ─────────────────────────────────────────
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+# ── Logging ───────────────────────────────────────────────────
+logging:
+  level:
+    OOP.JobPortal: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG

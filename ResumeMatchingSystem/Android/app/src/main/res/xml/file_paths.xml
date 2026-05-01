@@ -1,0 +1,44 @@
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+→ XML declaration (standard header for XML files)
+
+<paths>
+→ Root element required by FileProvider
+→ Defines which directories/files your app is allowed to share securely
+
+<cache-path
+    name="pdf_cache"
+    path="." />
+
+Explanation:
+
+cache-path
+→ Refers to your app’s internal cache directory:
+   /data/data/<your-app>/cache/
+→ Files here are temporary and can be cleared by the system
+
+name="pdf_cache"
+→ Logical name (alias) used to identify this path
+→ Used when generating content URIs (not an actual folder name)
+
+path="."
+→ "." means the ROOT of the cache directory
+→ So all files inside cache/ are allowed to be shared
+
+Purpose:
+→ Allows your app to share files (like PDFs) stored in cache
+→ Required for FileProvider to generate secure content:// URIs
+
+Example actual path:
+→ /data/data/com.jobportal.resumematching/cache/yourfile.pdf
+
+Security:
+→ Only files inside declared paths can be shared
+→ Prevents exposing sensitive internal storage
+
+Common use case:
+→ Save PDF in cache → share via Intent → FileProvider gives safe URI
+-->
+<paths>
+    <cache-path name="pdf_cache" path="." />
+</paths>

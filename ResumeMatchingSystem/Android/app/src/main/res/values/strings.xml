@@ -1,0 +1,4 @@
+<resources>
+<!-- \u200E is the Left-to-Right Mark -->
+    <string name="app_name">Roz\u200Eی</string>
+</resources>
