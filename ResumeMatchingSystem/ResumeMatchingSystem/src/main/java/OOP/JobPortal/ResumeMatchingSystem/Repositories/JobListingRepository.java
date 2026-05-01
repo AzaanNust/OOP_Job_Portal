@@ -29,10 +29,10 @@ public interface JobListingRepository extends JpaRepository<JobListing, Long> {
      * @param shiftString   shift type name as String e.g. "NIGHT" (null = no filter)
      */
     @Query("SELECT j FROM JobListing j WHERE " +
-            "j.status = OOP.JobPortal.ResumeMatchingSystem.Enums.JobStatus.OPEN AND " +
-            "(:title    IS NULL OR LOWER(j.title)    LIKE LOWER(CONCAT('%', :title, '%'))) AND " +
+            "j.status = 'OPEN' AND " +
+            "(:title IS NULL OR LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%'))) AND " +
             "(:location IS NULL OR LOWER(j.location) LIKE LOWER(CONCAT('%', :location, '%'))) AND " +
-            "(:shiftString IS NULL OR CAST(j.shiftType AS string) = :shiftString) " +
+            "(:shift IS NULL OR j.shiftType = :shift) " +
             "ORDER BY j.createdAt DESC")
     List<JobListing> searchJobsList(
             @Param("title")       String title,
