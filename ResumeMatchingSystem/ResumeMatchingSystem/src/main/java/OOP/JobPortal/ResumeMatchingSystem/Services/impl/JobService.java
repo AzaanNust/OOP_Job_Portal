@@ -71,9 +71,8 @@ public class JobService extends AbstractJobService {
 
         String t = (title    != null && !title.isBlank())    ? title.trim()    : null;
         String l = (location != null && !location.isBlank()) ? location.trim() : null;
-        String s = (shift    != null) ? shift.name()         : null;
 
-        return jobRepo.searchJobsList(t, l, s)
+        return jobRepo.searchJobsList(t, l, shift)
                 .stream()
                 .map(JobListingResponse::from)
                 .collect(Collectors.toList());
