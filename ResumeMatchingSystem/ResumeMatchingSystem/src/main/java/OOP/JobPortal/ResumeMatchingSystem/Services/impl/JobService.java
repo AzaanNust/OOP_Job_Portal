@@ -69,9 +69,11 @@ public class JobService extends AbstractJobService {
      */
     public List<JobListingResponse> searchJobs(String title, String location, ShiftType shift) {
 
-        String t = (title    != null && !title.isBlank())    ? title.trim()    : null;
+        // Normalize inputs (convert blank strings to null)
+        String t = (title != null && !title.isBlank()) ? title.trim() : null;
         String l = (location != null && !location.isBlank()) ? location.trim() : null;
 
+        // Call repository with enum directly (no String conversion)
         return jobRepo.searchJobsList(t, l, shift)
                 .stream()
                 .map(JobListingResponse::from)
