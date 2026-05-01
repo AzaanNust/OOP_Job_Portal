@@ -62,16 +62,18 @@ public class JobService extends AbstractJobService {
     }
 
     /**
-     * Searches open jobs with optional filters.
-     * Returns a plain List — avoids Spring PageImpl serialization issues
-     * which caused Gson on Android to silently return null content.
+     * Searches open jobs with optional filters. Returns a plain List.
+     *
+     * IMPORTANT: enum is converted to String here because PostgreSQL doesn't
+     * support nullable enum parameters in JPQL like MySQL does.
      */
     public List<JobListingResponse> searchJobs(String title, String location, ShiftType shift) {
 
-        String normalizedTitle    = (title    != null && title.isBlank())    ? null : title;
-        String normalizedLocation = (location != null && location.isBlank()) ? null : location;
+        String t = (title    != null && !title.isBlank())    ? title.trim()    : null;
+        String l = (location != null && !location.isBlank()) ? location.trim() : null;
+        String s = (shift    != null) ? shift.name()         : null;
 
-        return jobRepo.searchJobsList(normalizedTitle, normalizedLocation, shift)
+        return jobRepo.searchJobsList(t, l, s)
                 .stream()
                 .map(JobListingResponse::from)
                 .collect(Collectors.toList());
