@@ -278,10 +278,10 @@ public class JobListing {
         this.minExperienceYears = minExperienceYears;
     }
 
-//    /** Returns maximum experience years (null = no limit) */
-//    public Integer getMaxExperienceYears() {
-//        return maxExperienceYears;
-//    }
+    /** Returns maximum experience years (null = no limit) */
+    public Integer getMaxExperienceYears() {
+        return maxExperienceYears;
+    }
 
     /** Sets maximum experience years */
     public void setMaxExperienceYears(Integer maxExperienceYears) {
@@ -343,20 +343,20 @@ public class JobListing {
         return applications;
     }
 
-//    /** Sets the applications list */
-//    public void setApplications(List<Application> applications) {
-//        this.applications = applications;
-//    }
+    /** Sets the applications list */
+    public void setApplications(List<Application> applications) {
+        this.applications = applications;
+    }
 
     /** Returns when this listing was created */
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-//    /** Returns when this listing was last updated */
-//    public LocalDateTime getUpdatedAt() {
-//        return updatedAt;
-//    }
+    /** Returns when this listing was last updated */
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 
     // ── Business methods ───────────────────────────────────────────
 
@@ -413,10 +413,10 @@ public class JobListing {
         System.out.println("[JobListing] Job closed: " + this.title);
     }
 
-//    /** Returns whether this job is currently accepting applications */
-//    public boolean isAcceptingApplications() {
-//        return this.status == JobStatus.OPEN;
-//    }
+    /** Returns whether this job is currently accepting applications */
+    public boolean isAcceptingApplications() {
+        return this.status == JobStatus.OPEN;
+    }
 
     @Override
     public String toString() {

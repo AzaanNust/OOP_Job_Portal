@@ -13,32 +13,44 @@ import java.util.List;
 /**
  * JobListingRepository – data access for job_listings table.
  *
- * IMPORTANT: PostgreSQL does NOT allow nullable enum parameters in JPQL like MySQL does.
- * The fix is to convert the enum to a String on the calling side and compare both
- * sides as strings using CAST. This works on both PostgreSQL and MySQL.
+ * Two query methods to handle the optional shift filter cleanly:
+ *   - searchJobsWithShift()    when shift is provided
+ *   - searchJobsWithoutShift() when shift is null
+ *
+ * This avoids PostgreSQL's strict type checking on nullable enum parameters,
+ * while still using the enum directly (no String conversion needed).
+ *
+ * The status comparison uses the fully-qualified enum constant
+ * (OOP.JobPortal.ResumeMatchingSystem.Enums.JobStatus.OPEN) which JPQL
+ * accepts on both PostgreSQL and MySQL.
  */
 @Repository
 public interface JobListingRepository extends JpaRepository<JobListing, Long> {
 
-    /**
-     * Search open jobs with optional filters.
-     * Returns a plain List — avoids Spring PageImpl JSON serialization issues with Gson.
-     *
-     * @param title         partial job title (null = no filter)
-     * @param location      partial city name (null = no filter)
-     * @param shift   shift type name as String e.g. "NIGHT" (null = no filter)
-     */
+    /** Search open jobs with shift filter (shift must NOT be null). */
     @Query("SELECT j FROM JobListing j WHERE " +
-            "j.status = 'OPEN' AND " +
-            "(:title IS NULL OR LOWER(j.title) LIKE LOWER(CONCAT('%', :title, '%'))) AND " +
+            "j.status = OOP.JobPortal.ResumeMatchingSystem.Enums.JobStatus.OPEN AND " +
+            "(:title    IS NULL OR LOWER(j.title)    LIKE LOWER(CONCAT('%', :title, '%'))) AND " +
             "(:location IS NULL OR LOWER(j.location) LIKE LOWER(CONCAT('%', :location, '%'))) AND " +
-            "(:shift IS NULL OR j.shiftType = :shift) " +
+            "j.shiftType = :shift " +
             "ORDER BY j.createdAt DESC")
-    List<JobListing> searchJobsList(
-            @Param("title") String title,
+    List<JobListing> searchJobsWithShift(
+            @Param("title")    String title,
             @Param("location") String location,
-            @Param("shift") ShiftType shift
+            @Param("shift")    ShiftType shift
     );
+
+    /** Search open jobs without shift filter (any shift). */
+    @Query("SELECT j FROM JobListing j WHERE " +
+            "j.status = OOP.JobPortal.ResumeMatchingSystem.Enums.JobStatus.OPEN AND " +
+            "(:title    IS NULL OR LOWER(j.title)    LIKE LOWER(CONCAT('%', :title, '%'))) AND " +
+            "(:location IS NULL OR LOWER(j.location) LIKE LOWER(CONCAT('%', :location, '%'))) " +
+            "ORDER BY j.createdAt DESC")
+    List<JobListing> searchJobsWithoutShift(
+            @Param("title")    String title,
+            @Param("location") String location
+    );
+
     /** All jobs posted by a specific employer, newest first */
     List<JobListing> findByEmployerIdOrderByCreatedAtDesc(Long employerId);
 

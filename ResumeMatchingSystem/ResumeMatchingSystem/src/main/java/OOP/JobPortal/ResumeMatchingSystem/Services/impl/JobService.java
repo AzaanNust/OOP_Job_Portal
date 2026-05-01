@@ -64,18 +64,20 @@ public class JobService extends AbstractJobService {
     /**
      * Searches open jobs with optional filters. Returns a plain List.
      *
-     * IMPORTANT: enum is converted to String here because PostgreSQL doesn't
-     * support nullable enum parameters in JPQL like MySQL does.
+     * Shift is the only enum filter — handled by routing to the correct
+     * repository method depending on whether shift is provided.
+     * This keeps both queries enum-pure and PostgreSQL-friendly.
      */
     public List<JobListingResponse> searchJobs(String title, String location, ShiftType shift) {
 
-        // Normalize inputs (convert blank strings to null)
-        String t = (title != null && !title.isBlank()) ? title.trim() : null;
+        String t = (title    != null && !title.isBlank())    ? title.trim()    : null;
         String l = (location != null && !location.isBlank()) ? location.trim() : null;
 
-        // Call repository with enum directly (no String conversion)
-        return jobRepo.searchJobsList(t, l, shift)
-                .stream()
+        List<JobListing> results = (shift != null)
+                ? jobRepo.searchJobsWithShift(t, l, shift)
+                : jobRepo.searchJobsWithoutShift(t, l);
+
+        return results.stream()
                 .map(JobListingResponse::from)
                 .collect(Collectors.toList());
     }
