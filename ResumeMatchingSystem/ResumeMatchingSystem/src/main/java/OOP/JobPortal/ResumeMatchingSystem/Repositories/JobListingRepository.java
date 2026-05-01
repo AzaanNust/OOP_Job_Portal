@@ -26,7 +26,7 @@ public interface JobListingRepository extends JpaRepository<JobListing, Long> {
      *
      * @param title         partial job title (null = no filter)
      * @param location      partial city name (null = no filter)
-     * @param shiftString   shift type name as String e.g. "NIGHT" (null = no filter)
+     * @param shift   shift type name as String e.g. "NIGHT" (null = no filter)
      */
     @Query("SELECT j FROM JobListing j WHERE " +
             "j.status = 'OPEN' AND " +
@@ -35,11 +35,10 @@ public interface JobListingRepository extends JpaRepository<JobListing, Long> {
             "(:shift IS NULL OR j.shiftType = :shift) " +
             "ORDER BY j.createdAt DESC")
     List<JobListing> searchJobsList(
-            @Param("title")       String title,
-            @Param("location")    String location,
-            @Param("shiftString") String shiftString
+            @Param("title") String title,
+            @Param("location") String location,
+            @Param("shift") ShiftType shift
     );
-
     /** All jobs posted by a specific employer, newest first */
     List<JobListing> findByEmployerIdOrderByCreatedAtDesc(Long employerId);
 
