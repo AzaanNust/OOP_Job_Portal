@@ -37,10 +37,10 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
-
+import oop.project.androidoopproject.BuildConfig
 // ── Groq Config ───────────────────────────────────────────────────
 // Get your free key at console.groq.com (no credit card needed)
-private const val GROQ_API_KEY = "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"
+private val GROQ_API_KEY = BuildConfig.API_KEY
 private const val GROQ_MODEL   = "llama-3.3-70b-versatile"
 private const val GROQ_URL     = "https://api.groq.com/openai/v1/chat/completions"
 

@@ -26,7 +26,6 @@ import oop.project.androidoopproject.ui.theme.*
 import oop.project.androidoopproject.ui.viewmodel.ApplicationViewModel
 import oop.project.androidoopproject.util.SessionManager
 import oop.project.androidoopproject.util.UiState
-import oop.project.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
